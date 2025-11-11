@@ -7,6 +7,7 @@ const port = 5050;
 const url = process.env.db_url;
 app.use(express.json());
 
+
 mongoose
   .connect(url)
   .then(() => {
@@ -16,9 +17,19 @@ mongoose
     console.log("DB is not connected", err);
   });
 
+const authRouting = require("../routes/authRoutes");
+app.use("/api/v1/auth", authRouting);
+
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "welcome back end",
+  });
+});
+
+// for menna "post"
+app.post("/", (req, res) => {
+  res.status(200).json({
+    message: "welcome to get data",
   });
 });
 
