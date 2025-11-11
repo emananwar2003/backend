@@ -2,10 +2,10 @@ const User = require("../models/userModel");
 
 const bcrypt = require("bcrypt");
 
+const sign = require("jwt-encode");
+
 const register = async (req, res) => {
   const { name, email, phone, password } = req.body;
-
-  //check law el mail mawgod abl keda bel findone
 
   const hashedPass = await bcrypt.hash(password, 10);
 
@@ -36,10 +36,11 @@ const login = async (req, res) => {
 
   const neededUser = await User.findOne(
     { email },
-    { password: 0, createdAt: 0, updatedAt: 0 }
+    { createdAt: 0, updatedAt: 0 }
   );
 
-  
+  const token = sign(neededUser,process.env.SECRET_KEY);
+
 
   if (!neededUser) {
     return res.status(400).json({
@@ -53,7 +54,10 @@ const login = async (req, res) => {
   if (check) {
     return res.status(200).json({
       message: "Login successfully",
-      data: null,
+      data: {
+        token,
+        id:neededUser.id,
+      },
     });
   } else {
     return res.status(400).json({
