@@ -19,6 +19,7 @@ mongoose
 
 const authRouting = require("../routes/authRoutes");
 app.use("/api/v1/auth", authRouting);
+app.use("/api/v1/login", authRouting);
 
 app.get("/", (req, res) => {
   res.status(200).json({
