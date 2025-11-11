@@ -34,7 +34,13 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  const neededUser = await User.findOne({ email });
+  const neededUser = await User.findOne(
+    { email },
+    { password: 0, createdAt: 0, updatedAt: 0 }
+  );
+
+  
+
   if (!neededUser) {
     return res.status(400).json({
       message: "Unvalid Email",
