@@ -1,38 +1,43 @@
 const express = require("express");
-const app = express();
-require("dotenv").config();
+const cors = require("cors"); //#
 const mongoose = require("mongoose");
+require("dotenv").config();
 
+const app = express();
 const port = 5050;
 const url = process.env.db_url;
+
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+app.use(cors());
 app.use(express.json());
 
-
+// Connect to MongoDB
 mongoose
   .connect(url)
-  .then(() => {
-    console.log("DB is connected");
-  })
-  .catch((err) => {
-    console.log("DB is not connected", err);
-  });
+  .then(() => console.log("DB is connected"))
+  .catch((err) => console.error("DB is not connected:", err));
 
+// Routes
 const authRouting = require("../routes/authRoutes");
 app.use("/api/v1/auth", authRouting);
-app.use("/api/v1/login", authRouting);
+
 
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "welcome back end",
+    message: "Welcome to the backend",
   });
 });
 
-// for menna "post"
 app.post("/", (req, res) => {
   res.status(200).json({
-    message: "welcome to get data",
+    message: "Welcome to POST route",
   });
 });
+
 
 app.use((req, res) => {
   res.status(404).json({
@@ -40,6 +45,7 @@ app.use((req, res) => {
     data: null,
   });
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
