@@ -39,7 +39,9 @@ const login = async (req, res) => {
     { createdAt: 0, updatedAt: 0 }
   );
 
-  const token = sign(neededUser,process.env.SECRET_KEY);
+  const SECRET_KEY=require("crypto").randomBytes(64).toString("hex");
+
+  const token = sign(neededUser,SECRET_KEY);
 
 
   if (!neededUser) {
