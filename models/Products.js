@@ -8,7 +8,6 @@ const productSchema = new mongoose.Schema(
     quantity: { type: Number, default: 0 },
     image: String,
     category: String,
-    // Add other fields as needed
   },
   { timestamps: true }
 );
