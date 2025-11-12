@@ -6,7 +6,7 @@ const sign = require("jwt-encode");
 
 const register = async (req, res) => {
   try {
-    const { name, email, phone, password, role } = req.body;
+    const { name, email, phone, password , role } = req.body;
 
     if (!name || !email || !phone || !password) {
       return res.status(400).json({
@@ -61,10 +61,8 @@ const login = async (req, res) => {
       data: null,
     });
   }
-  const SECRET_KEY =
-    b5786de218af46bc7eebfba855715a445c6a276ec72c0e7de63b4a87cd9ea2b3;
 
-  const token = sign(neededUser, SECRET_KEY);
+  const token = sign(neededUser, process.env.SECRET_KEY);
 
   const check = await bcrypt.compare(password, neededUser.password);
 
