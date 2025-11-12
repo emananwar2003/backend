@@ -48,37 +48,44 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const neededUser = await User.findOne(
-    { email },
-    { createdAt: 0, updatedAt: 0 }
-  );
+    const neededUser = await User.findOne(
+      { email },
+      { createdAt: 0, updatedAt: 0 }
+    );
 
-  if (!neededUser) {
-    return res.status(400).json({
-      message: "Unvalid Email",
-      data: null,
-    });
-  }
+    if (!neededUser) {
+      return res.status(400).json({
+        message: "Unvalid Email",
+        data: null,
+      });
+    }
 
-  const SECRET_KEY = b5786de218af46bc7eebfba855715a445c6a276ec72c0e7de63b4a87cd9ea2b3;
+    const check = await bcrypt.compare(password, neededUser.password);
 
-  const token = sign(neededUser, SECRET_KEY);
+     if (!check) {
+      return res.status(400).json({
+        message: "Invalid Password",
+        data: null,
+      });
+    }
 
-  const check = await bcrypt.compare(password, neededUser.password);
+    const SECRET_KEY =
+      "b5786de218af46bc7eebfba855715a445c6a276ec72c0e7de63b4a87cd9ea2b3";
 
-  if (check) {
+    const token = sign(neededUser, SECRET_KEY);
+
     return res.status(200).json({
       message: "Login successfully",
       data: {
         token,
-        id: neededUser.id,
       },
     });
-  } else {
-    return res.status(400).json({
-      message: "Invalid Password",
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
       data: null,
     });
   }
