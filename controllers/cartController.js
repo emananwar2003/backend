@@ -20,9 +20,9 @@ const addToCart = async (req, res) => {
         await userCart.save();
     }
 
-    userCart = await cart.findOne({ user: userId }).populate("products.productid");
 
-        res.status(200).json({ message: "Product added to cart", cart: userCart });
+
+        res.status(200).json({ message: "Product added to cart" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
