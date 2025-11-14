@@ -27,10 +27,14 @@ mongoose
 const authRouting = require("../routes/authRoutes");
 app.use("/api/v1/auth", authRouting);
 
-const productRoutes = require("../routes/ProductRoutes");
+const productRoutes = require("../routes/productRoutes");
 app.use("/api/v1/products", productRoutes);
+
 const cartroute = require("../routes/cartRoutes");
 app.use("/api/v1/cart", cartroute);
+
+const userRoutes = require("../routes/userRoutes");
+app.use("/api/v1/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
