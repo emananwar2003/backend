@@ -1,4 +1,4 @@
-const Product = require("../models/Products");
+const Product = require("../models/products");
 const mongoose = require("mongoose"); // Import mongoose to check for valid IDs
 
 // Handles adding a single product OR an array of products (bulk insert)
