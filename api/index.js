@@ -33,8 +33,8 @@ app.use("/api/v1/products", productRoutes);
 const cartroute = require("../routes/cartRoutes");
 app.use("/api/v1/cart", cartroute);
 
-const userRoutes = require("../routes/userRoutes");
-app.use("/api/v1/users", userRoutes);
+// const userRoutes = require("../routes/userRoutes");
+// app.use("/api/v1/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
