@@ -4,13 +4,13 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
-const port = 5050;
+const port = process.env.PORT || 5050;
 const url = process.env.db_url;
 
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
 );
@@ -22,8 +22,7 @@ mongoose
   .then(() => console.log("DB is connected"))
   .catch((err) => console.error("DB is not connected:", err));
 
-// Routes
-
+// Routes - Paths are correct for api/index.js structure
 const authRouting = require("../routes/authRoutes");
 app.use("/api/v1/auth", authRouting);
 
@@ -32,9 +31,6 @@ app.use("/api/v1/products", productRoutes);
 
 const cartroute = require("../routes/cartRoutes");
 app.use("/api/v1/cart", cartroute);
-
-// const userRoutes = require("../routes/userRoutes");
-// app.use("/api/v1/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -48,6 +44,7 @@ app.post("/", (req, res) => {
   });
 });
 
+// 404 handler - must be last
 app.use((req, res) => {
   res.status(404).json({
     message: "Wrong Routing",
