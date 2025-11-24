@@ -12,13 +12,14 @@ let allowed_URL = ["https://groovystitches.vercel.app"];
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowed_URL.find(origin)) {
+      if (!origin || allowed_URL.includes(origin)) {
         callback(null, true);
       } else {
         callback(null, false);
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
