@@ -7,9 +7,17 @@ const app = express();
 const port = process.env.PORT || 5050;
 const url = process.env.db_url;
 
+let allowed_URL = ["https://groovystitches.vercel.app"];
+
 app.use(
   cors({
-    origin: "*",
+    origin: (origin, callback) => {
+      if (!origin || allowed_URL.find(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, false);
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
