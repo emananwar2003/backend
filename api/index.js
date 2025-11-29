@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 5050;
-const url = process.env.db_url;
+const url = process.env.DB_URL;
 
 let allowed_URL = ["https://groovystitches.vercel.app"];
 
@@ -29,7 +29,8 @@ app.use(express.json());
 mongoose
   .connect(url)
   .then(() => console.log("DB is connected"))
-  .catch((err) => console.error("DB is not connected:", err));
+  .catch((err) => console.log(`DB is diconnected due to ${err.message}`));
+console.log("DB URL:", url);
 
 // Routes - Paths are correct for api/index.js structure
 const authRouting = require("../routes/authRoutes");

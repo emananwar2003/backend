@@ -6,7 +6,7 @@ const {
   updateProduct,
   deleteProduct,
   getAllProducts,
-  getProductById,
+  getSingleProduct,
 } = require("../controllers/ProductController");
 
 // CREATE single or bulk
@@ -16,7 +16,7 @@ router.post("/", addProduct);
 router.get("/", getAllProducts);
 
 // GET one
-router.get("/:id", getProductById);
+router.get("/:id", getSingleProduct);
 
 // UPDATE
 router.put("/:id", updateProduct);
