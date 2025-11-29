@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 5050;
-const url = process.env.DB_URL;
+const url = process.env.db_url;
 
 let allowed_URL = [
   "https://groovystitches.vercel.app",
@@ -27,6 +27,8 @@ app.use(
   })
 );
 app.use(express.json());
+console.log("DB_URL from env ===>", process.env.DB_URL);
+console.log("PORT from env ===>", process.env.PORT);
 
 // Connect to MongoDB
 mongoose
