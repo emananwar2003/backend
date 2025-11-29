@@ -7,7 +7,10 @@ const app = express();
 const port = process.env.PORT || 5050;
 const url = process.env.DB_URL;
 
-let allowed_URL = ["https://groovystitches.vercel.app"];
+let allowed_URL = [
+  "https://groovystitches.vercel.app",
+  "http://localhost:5173",
+];
 
 app.use(
   cors({
@@ -30,13 +33,12 @@ mongoose
   .connect(url)
   .then(() => console.log("DB is connected"))
   .catch((err) => console.log(`DB is diconnected due to ${err.message}`));
-console.log("DB URL:", url);
 
 // Routes - Paths are correct for api/index.js structure
 const authRouting = require("../routes/authRoutes");
 app.use("/api/v1/auth", authRouting);
 
-const productRoutes = require("../routes/ProductRoutes");
+const productRoutes = require("../routes/productRoutes");
 app.use("/api/v1/products", productRoutes);
 
 const cartroute = require("../routes/cartRoutes");
