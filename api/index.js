@@ -11,8 +11,6 @@ let allowed_URL = [
   "https://groovystitches.vercel.app",
   "http://localhost:5173",
 ];
-console.log("db_url is : ", process.env.db_url);
-console.log("PORT is : ", process.env.PORT);
 
 app.use(
   cors({
