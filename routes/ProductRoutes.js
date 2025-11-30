@@ -8,7 +8,7 @@ const {
   deleteProduct,
   getAllProducts,
   getSingleProduct,
-} = require("../controllers/productController");
+} = require("../controllers/ProductController");
 
 // CREATE single or bulk
 router.post("/", addProduct);
