@@ -71,8 +71,8 @@ const login = async (req, res) => {
         data: null,
       });
     }
-
-    const token = sign(neededUser, process.env.SECRET_KEY);
+    // i deleted the Secret key 
+    const token = sign(neededUser, process.env.SECRET_KEY); 
 
     return res.status(200).json({
       message: "Login successfully",
