@@ -72,10 +72,7 @@ const login = async (req, res) => {
       });
     }
 
-    const SECRET_KEY =
-      "b5786de218af46bc7eebfba855715a445c6a276ec72c0e7de63b4a87cd9ea2b3";
-
-    const token = sign(neededUser, SECRET_KEY);
+    const token = sign(neededUser, process.env.SECRET_KEY);
 
     return res.status(200).json({
       message: "Login successfully",
