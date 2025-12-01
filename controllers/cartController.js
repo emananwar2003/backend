@@ -73,9 +73,33 @@ const clearCart = async (req, res) => {
 }
 };
 
+const decreaseQuantity = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { productId } = req.body;
+        const userCart = await cart.findOne({ user: userId });
+        if (!userCart) return res.status(404).json({ message: "Cart not found" });
+
+        const productIndex = userCart.products.findIndex(
+            (item) => item.productid.toString() === productId
+        );
+
+        if (productIndex > -1) {
+            userCart.products.splice(productIndex, 1);
+            await userCart.save();
+            res.status(200).json({ message: "Product quantity decreased", cart: userCart });
+        } else {
+            res.status(404).json({ message: "Product not found in cart" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     addToCart,
     getCart,
     removeFromCart,
     clearCart,
+    decreaseQuantity,
 };

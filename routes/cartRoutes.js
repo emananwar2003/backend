@@ -5,20 +5,14 @@ const {
     getCart,
     removeFromCart,
     clearCart,
+    decreaseQuantity,
 } = require("../controllers/cartController");
 const userAuth = require("../middleware/userAuth");
+
 router.post("/", userAuth, addToCart);
-
-
 router.get("/", userAuth, getCart);
-
-
-router.delete("/", userAuth,clearCart);
-
-
-router.patch("/", userAuth, removeFromCart); 
-
-
-
+router.delete("/", userAuth, clearCart);
+router.patch("/", userAuth, removeFromCart);
+router.put("/", userAuth, decreaseQuantity);
 
 module.exports = router;
